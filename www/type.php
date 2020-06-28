@@ -125,7 +125,7 @@ $data->execute([
             <td><?= htmlentities($row['carton.description']) ?></td>
             <td>
               <div class="btn-group" role="group">
-                <a href="#" type="button" class="disabled btn btn-sm btn-outline-primary">Ajouter du contenu</a>
+                <a href="content.php?carton=<?=htmlentities($row['carton.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Ajouter du contenu</a>
                 <a href="carton.php?action=view&id=<?=htmlentities($row['carton.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Voir le contenu</a>
                 <a href="carton.php?action=edit&id=<?=htmlentities($row['carton.id'])?>" type="button" class="btn btn-sm btn-outline-warning">Éditer le carton</a>
               </div>
