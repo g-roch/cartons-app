@@ -3,7 +3,7 @@
 require_once 'inc/init.php';
 require 'inc/header.php';
 
-const ALLOWED_ACTION = ['view', 'new', 'save'];
+const ALLOWED_ACTION = ['view', 'new', 'save', 'edit'];
 
 $data['carton.id'] = $_GET['id'] ?? null;
 $data['carton.type'] = $_GET['type'] ?? null;
@@ -73,6 +73,8 @@ FROM `type`
 sql
 )->fetchAll();
 
+  $roIfView = $action == 'view' ? 'readonly="readonly"' : '';
+
 ?>
 <div class="row">
   <div class="col">
@@ -88,7 +90,7 @@ sql
       </div>
       <div class="form-group">
         <label for="frm-type">Type</label>
-        <select required="required" class="form-control custom-select" id="frm-type" name="type">
+        <select required="required" <?=$roIfView?> class="form-control custom-select" id="frm-type" name="type">
           <option <?= isset($show['carton.id']) ? '' : 'selected="selected" ' ?> disabled="disabled">Veuillez selectioner</option>
           <?php foreach($types as $type): ?>
           <option <?= $type['type.id'] == $show['carton.type'] ? 'selected="selected" ' : '' ?> value="<?= $type['type.id'] ?>" ><?= $type['type.id'] ?> - <?= $type['type.name'] ?></option>
@@ -97,15 +99,20 @@ sql
       </div>
       <div class="form-group">
         <label for="frm-code">Code</label>
-        <input required="required" type="text" class="form-control" id="frm-code" name="code" value="<?= htmlentities($show['carton.code'] ?? '') ?>" />
+        <input required="required" <?=$roIfView?> type="text" class="form-control" id="frm-code" name="code" value="<?= htmlentities($show['carton.code'] ?? '') ?>" />
       </div>
       <div class="form-group">
         <label for="frm-description">Description</label>
-        <textarea type="text" class="form-control" id="frm-description" name="description" ><?= htmlentities($show['carton.description'] ?? '') ?></textarea>
+        <textarea type="text" <?=$roIfView?> class="form-control" id="frm-description" name="description" ><?= htmlentities($show['carton.description'] ?? '') ?></textarea>
       </div>
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="submit" name=action value=save class="btn btn-outline-success">Enregistrer</button>
-        <button type="reset" class="btn btn-outline-warning">Effacer le formulaire</button>
+        <?php if($action == 'edit' || $action == 'new'): ?>
+          <button type="submit" name=action value=save class="btn btn-outline-success">Enregistrer</button>
+          <button type="reset" class="btn btn-outline-warning">Effacer le formulaire</button>
+        <?php endif ?>
+        <?php if(isset($show['carton.type'])): ?>
+          <a href="type.php?id=<?=htmlentities($show['carton.type'])?>" type="button" class="btn btn-outline-warning">Retour au type</a>
+        <?php endif ?>
       </div>
     </form>
   </div>
