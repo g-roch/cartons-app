@@ -26,12 +26,12 @@ sql
         <tbody>
           <?php foreach($data as $row): ?>
           <tr>
-            <th scope="row"><?= htmlentities($row['id']) ?></th>
-            <td><?= htmlentities($row['name']) ?></td>
+            <th scope="row"><?= htmlentities($row['type.id']) ?></th>
+            <td><?= htmlentities($row['type.name']) ?></td>
             <td>
               <div class="btn-group" role="group">
-                <a href="carton.php?action=new&type=<?=htmlentities($row['id'])?>" type="button" class="btn btn-sm btn-outline-primary">Nouveau carton</a>
-                <a href="type.php?type=<?=htmlentities($row['id'])?>" type="button" class="disabled btn btn-sm btn-outline-primary">Liste des cartons</a>
+                <a href="carton.php?action=new&type=<?=htmlentities($row['type.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Nouveau carton</a>
+                <a href="type.php?type=<?=htmlentities($row['type.id'])?>" type="button" class="disabled btn btn-sm btn-outline-primary">Liste des cartons</a>
               </div>
             </td>
           </tr>

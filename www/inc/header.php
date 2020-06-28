@@ -12,7 +12,7 @@
 	</head>
 	<body>
 <nav class="navbar sticky-top navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Cartons</a>
+  <a class="navbar-brand" href="index.php">Cartons</a>
 </nav>
 		<div class="container-fluid">
 
