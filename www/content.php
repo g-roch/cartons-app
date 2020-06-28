@@ -20,9 +20,9 @@ if($action == 'save') {
   $values = [
     ':carton' => $data['content.carton'],
     ':name' => $data['content.name'],
-    ':description' => $data['content.description'],
-    ':quantity' => $data['content.quantity'],
-    ':unit' => $data['content.unit'],
+    ':description' => $data['content.description'] == '' ? null : $data['content.description'],
+    ':quantity' => $data['content.quantity'] == '' ? null : $data['content.quantity'],
+    ':unit' => $data['content.unit'] == '' ? null : $data['content.unit'],
   ];
   $sql = <<<sql
 SET 
@@ -66,6 +66,18 @@ sql
     ])) {
       $dbdata = $statement->fetch();
     }
+  } elseif(isset($data['content.carton'])) {
+    $statement = $PDO->prepare( <<<sql
+SELECT * 
+FROM `carton`
+WHERE `carton`.`id` = :id
+sql
+);
+    if($statement->execute([
+      ':id' => $data['content.carton'],
+    ])) {
+      $dbdata = $statement->fetch();
+    }
   }
 
   $show = $dbdata;
@@ -73,7 +85,6 @@ sql
 
 
   $roIfView = $action == 'view' ? 'readonly="readonly"' : '';
-  var_dump($show);
 
 ?>
 <div class="row">
@@ -88,7 +99,7 @@ sql
         <label for="frm-id">Numéro interne</label>
         <input type="text" class="form-control" id="frm-id" readonly="readonly" name="id" value="<?= htmlentities($show['content.id']??$action) ?>" />
       </div>
-      <input type="hidden" name="carton" value="<?= htmlentities($show['content.carton'] ?? '') ?>" />
+      <input type="hidden" name="carton" value="<?= htmlentities($show['carton.id'] ?? '') ?>" />
       <div class="form-row">
         <div class="form-group col-2">
           <label for="frm-carton-code">Code du carton</label>
@@ -109,11 +120,11 @@ sql
       </div>
       <div class="form-group">
         <label for="frm-quantity">Quantité</label>
-        <input required="required" <?=$roIfView?> type="text" class="form-control" id="frm-quantity" name="quantity" value="<?= htmlentities($show['content.quantity'] ?? '') ?>" />
+        <input <?=$roIfView?> type="text" class="form-control" id="frm-quantity" name="quantity" value="<?= htmlentities($show['content.quantity'] ?? '') ?>" />
       </div>
       <div class="form-group">
         <label for="frm-unit">Unité</label>
-        <input required="required" <?=$roIfView?> type="text" class="form-control" id="frm-unit" name="unit" value="<?= htmlentities($show['content.unit'] ?? '') ?>" />
+        <input <?=$roIfView?> type="text" class="form-control" id="frm-unit" name="unit" value="<?= htmlentities($show['content.unit'] ?? '') ?>" />
       </div>
       <div class="btn-group" role="group" aria-label="Basic example">
         <?php if($action == 'edit' || $action == 'new'): ?>
