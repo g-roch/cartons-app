@@ -1,7 +1,12 @@
 <?php
-
-const DIR_ETC = __DIR__.'/../etc';
-const DIR_LIB = __DIR__.'/../lib';
-
-set_include_path(get_include_path() . PATH_SEPARATOR . DIR_LIB);
+require_once 'inc/init.php';
+require 'inc/header.php';
+?>
+			<div class="row">
+				<div class="col">
+					<?php var_dump($PDO); ?>
+				</div>
+			</div>
+<?php
+require 'inc/footer.php';
 
