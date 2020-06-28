@@ -78,7 +78,7 @@ sql
         <input required="required" <?=$roIfView?> type="text" class="form-control" id="frm-name" name="name" value="<?= htmlentities($show['type.name'] ?? '') ?>" />
       </div>
       <div class="btn-group" role="group" aria-label="Basic example">
-        <?php if($action == 'edit'): ?>
+        <?php if($action == 'edit' || $action == 'new'): ?>
           <button type="submit" name=action value=save class="btn btn-outline-success">Enregistrer</button>
           <button type="reset" class="btn btn-outline-warning">Effacer le formulaire</button>
         <?php endif ?>
