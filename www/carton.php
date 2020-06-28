@@ -73,7 +73,7 @@ FROM `type`
 sql
 )->fetchAll();
 
-  $roIfView = $action == 'view' ? 'readonly="readonly"' : '';
+  $roIfView = $action == 'view' ? 'disabled="disabled"' : '';
 
 ?>
 <div class="row">
@@ -117,6 +117,61 @@ sql
     </form>
   </div>
 </div>
+<?php if($action == 'view'): ?>
+<?php
+$data = $PDO->prepare( <<<sql
+SELECT *
+FROM `content`
+WHERE `content`.`carton` = :carton
+sql
+);
+$data->execute([
+  ':carton' => $show['carton.id'],
+]);
+
+?>
+<hr />
+<div class="row">
+  <div class="col">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Description</th>
+            <th scope="col">Qte</th>
+            <th scope="col">
+              <div class="btn-group" role="group">
+                <a href="content.php?action=new&carton=<?=htmlentities($show['carton.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Nouveau</a>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($data as $row): ?>
+          <tr>
+            <th scope="row"><?= htmlentities($row['content.id']) ?></th>
+            <td><?= htmlentities($row['content.name']) ?></td>
+            <td><?= htmlentities($row['content.description']) ?></td>
+            <td>
+              <?= htmlentities($row['content.quantity'] ?? '') ?>
+              <?= htmlentities($row['content.unit'] ?? '') ?>
+            </td>
+            <td>
+              <div class="btn-group" role="group">
+                <a href="content.php?action=view&id=<?=htmlentities($row['content.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Voir l'objet</a>
+                <a href="content.php?action=edit&id=<?=htmlentities($row['content.id'])?>" type="button" class="btn btn-sm btn-outline-warning">Éditer l'objet</a>
+              </div>
+            </td>
+          </tr>
+          <?php endforeach ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<?php endif /* $action == 'view' */ ?>
 <?php
 } // if($action != 'none')
 require 'inc/footer.php';
