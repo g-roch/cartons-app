@@ -51,9 +51,12 @@
               Nouveau
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="type.php">Type</a>
               <a class="dropdown-item" href="carton.php">Carton</a>
+              <!--
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Something else here</a>
+              -->
             </div>
           </li>
         </ul>
