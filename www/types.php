@@ -37,6 +37,7 @@ sql
               <div class="btn-group" role="group">
                 <a href="carton.php?action=new&type=<?=htmlentities($row['type.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Nouveau carton</a>
                 <a href="type.php?id=<?=htmlentities($row['type.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Liste des cartons</a>
+                <a href="type.php?action=edit&id=<?=htmlentities($row['type.id'])?>" type="button" class="btn btn-sm btn-outline-warning">Éditer le type</a>
               </div>
             </td>
           </tr>

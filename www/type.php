@@ -3,7 +3,7 @@
 require_once 'inc/init.php';
 require 'inc/header.php';
 
-const ALLOWED_ACTION = ['view', 'new', 'save'];
+const ALLOWED_ACTION = ['view', 'new', 'save', 'edit'];
 
 $data['type.id'] = $_GET['id'] ?? null;
 $data['type.name'] = $_GET['name'] ?? null;
@@ -59,6 +59,7 @@ sql
   $show['type.id'] = $show['type.id'] ?? null;
   $show['type.name'] = $show['type.name'] ?? null;
 
+  $roIfView = $action == 'view' ? 'readonly="readonly"' : '';
 ?>
 <div class="row">
   <div class="col">
@@ -74,12 +75,14 @@ sql
       </div>
       <div class="form-group">
         <label for="frm-name">name</label>
-        <input required="required" type="text" class="form-control" id="frm-name" name="name" value="<?= htmlentities($show['type.name'] ?? '') ?>" />
+        <input required="required" <?=$roIfView?> type="text" class="form-control" id="frm-name" name="name" value="<?= htmlentities($show['type.name'] ?? '') ?>" />
       </div>
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="submit" name=action value=save class="btn btn-outline-success">Enregistrer</button>
-        <button type="reset" class="btn btn-outline-warning">Effacer le formulaire</button>
-      </div>
+      <?php if($action == 'edit'): ?>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="submit" name=action value=save class="btn btn-outline-success">Enregistrer</button>
+          <button type="reset" class="btn btn-outline-warning">Effacer le formulaire</button>
+        </div>
+      <?php endif ?>
     </form>
   </div>
 </div>
