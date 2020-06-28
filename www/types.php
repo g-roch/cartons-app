@@ -3,7 +3,7 @@
 require_once 'inc/init.php';
 require 'inc/header.php';
 $data = $PDO->query( <<<sql
-SELECT `type`.*, COUNT(*) as quantity
+SELECT `type`.*, COUNT(`carton`.`id`) as quantity
 FROM `type`
   LEFT JOIN `carton` ON `carton`.`type` = `type`.`id`
 GROUP BY `type`.`id`
