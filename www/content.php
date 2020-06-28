@@ -3,7 +3,7 @@
 require_once 'inc/init.php';
 require 'inc/header.php';
 
-const ALLOWED_ACTION = ['view', 'new', 'save', 'edit'];
+const ALLOWED_ACTION = ['view', 'new', 'save', 'edit', 'delete'];
 
 $data['content.id'] = $_GET['id'] ?? null;
 $data['content.carton'] = $_GET['carton'] ?? null;
@@ -15,6 +15,18 @@ $data['content.unit'] = $_GET['unit'] ?? null;
 $action = $_GET['action'] ?? (isset($data['content.id']) ? 'view' : 'new');
 if(!in_array($action, ALLOWED_ACTION, true)) throw new Exception();
 
+// Delete
+if($action == 'delete') {
+  $sql = <<<sql
+DELETE FROM `content`
+WHERE `content`.`id` = :id
+sql;
+  $statement = $PDO->prepare($sql);
+  $statement->execute([
+    ':id' => $data['content.id']
+  ]);
+  $action = 'none';
+}
 // Save
 if($action == 'save') {
   $values = [
@@ -134,6 +146,7 @@ sql
         <?php if(isset($show['content.carton'])): ?>
           <a href="carton.php?id=<?=htmlentities($show['content.carton'])?>" type="button" class="btn btn-outline-warning">Retour au carton</a>
         <?php endif ?>
+        <button type="submit" name=action value=delete class="btn btn-outline-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce contenu')" >Supprimer</button>
       </div>
     </form>
   </div>
