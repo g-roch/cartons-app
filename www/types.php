@@ -22,7 +22,7 @@ sql
             <th scope="col">Qte</th>
             <th scope="col">
               <div class="btn-group" role="group">
-                <a href="type.php?action=new" type="button" class="disabled btn btn-sm btn-outline-primary">Nouveau</a>
+                <a href="type.php?action=new" type="button" class="btn btn-sm btn-outline-primary">Nouveau</a>
               </div>
             </th>
           </tr>
@@ -36,7 +36,7 @@ sql
             <td>
               <div class="btn-group" role="group">
                 <a href="carton.php?action=new&type=<?=htmlentities($row['type.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Nouveau carton</a>
-                <a href="type.php?type=<?=htmlentities($row['type.id'])?>" type="button" class="disabled btn btn-sm btn-outline-primary">Liste des cartons</a>
+                <a href="type.php?id=<?=htmlentities($row['type.id'])?>" type="button" class="btn btn-sm btn-outline-primary">Liste des cartons</a>
               </div>
             </td>
           </tr>
