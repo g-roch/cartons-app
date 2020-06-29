@@ -84,22 +84,24 @@ sql
       <h2>Nouveau carton</h2>
     <?php endif ?>
     <form>
-      <div class="form-group">
-        <label for="frm-id">Numéro interne</label>
-        <input type="text" class="form-control" id="frm-id" readonly="readonly" name="id" value="<?= htmlentities($show['carton.id']??$action) ?>" />
-      </div>
-      <div class="form-group">
-        <label for="frm-type">Type</label>
-        <select required="required" <?=$roIfView?> class="form-control custom-select" id="frm-type" name="type">
-          <option <?= isset($show['carton.id']) ? '' : 'selected="selected" ' ?> disabled="disabled">Veuillez selectioner</option>
-          <?php foreach($types as $type): ?>
-          <option <?= $type['type.id'] == $show['carton.type'] ? 'selected="selected" ' : '' ?> value="<?= $type['type.id'] ?>" ><?= $type['type.id'] ?> - <?= $type['type.name'] ?></option>
-          <?php endforeach ?>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="frm-code">Code</label>
-        <input required="required" <?=$roIfView?> type="text" class="form-control" id="frm-code" name="code" value="<?= htmlentities($show['carton.code'] ?? '') ?>" />
+      <div class="form-row">
+        <div class="form-group col-2">
+          <label for="frm-id">Numéro interne</label>
+          <input type="text" class="form-control" id="frm-id" readonly="readonly" name="id" value="<?= htmlentities($show['carton.id']??$action) ?>" />
+        </div>
+        <div class="form-group col-2">
+          <label for="frm-code">Code</label>
+          <input required="required" <?=$roIfView?> type="text" class="form-control" id="frm-code" name="code" value="<?= htmlentities($show['carton.code'] ?? '') ?>" />
+        </div>
+        <div class="form-group col">
+          <label for="frm-type">Type</label>
+          <select required="required" <?=$roIfView?> class="form-control custom-select" id="frm-type" name="type">
+            <option <?= isset($show['carton.id']) ? '' : 'selected="selected" ' ?> disabled="disabled">Veuillez selectioner</option>
+            <?php foreach($types as $type): ?>
+            <option <?= $type['type.id'] == $show['carton.type'] ? 'selected="selected" ' : '' ?> value="<?= $type['type.id'] ?>" ><?= $type['type.id'] ?> - <?= $type['type.name'] ?></option>
+            <?php endforeach ?>
+          </select>
+        </div>
       </div>
       <div class="form-group">
         <label for="frm-description">Description</label>
@@ -123,6 +125,7 @@ $data = $PDO->prepare( <<<sql
 SELECT *
 FROM `content`
 WHERE `content`.`carton` = :carton
+ORDER BY `content`.`name` ASC
 sql
 );
 $data->execute([

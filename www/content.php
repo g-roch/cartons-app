@@ -110,12 +110,12 @@ sql
       <h2>Nouveau contenu</h2>
     <?php endif ?>
     <form>
-      <div class="form-group">
-        <label for="frm-id">Numéro interne</label>
-        <input type="text" class="form-control" id="frm-id" readonly="readonly" name="id" value="<?= htmlentities($show['content.id']??$action) ?>" />
-      </div>
       <input type="hidden" name="carton" value="<?= htmlentities($show['carton.id'] ?? '') ?>" />
       <div class="form-row">
+        <div class="form-group col-2">
+          <label for="frm-id">Numéro interne</label>
+          <input type="text" class="form-control" id="frm-id" readonly="readonly" name="id" value="<?= htmlentities($show['content.id']??$action) ?>" />
+        </div>
         <div class="form-group col-2">
           <label for="frm-carton-code">Code du carton</label>
           <input readonly="readonly" <?=$roIfView?> type="text" class="form-control" id="frm-carton-code" value="<?= htmlentities($show['carton.code'] ?? '') ?>" />
@@ -133,13 +133,15 @@ sql
         <label for="frm-description">Description</label>
         <textarea type="text" <?=$roIfView?> class="form-control" id="frm-description" name="description" ><?= htmlentities($show['content.description'] ?? '') ?></textarea>
       </div>
-      <div class="form-group">
-        <label for="frm-quantity">Quantité</label>
-        <input <?=$roIfView?> type="text" class="form-control" id="frm-quantity" name="quantity" value="<?= htmlentities($show['content.quantity'] ?? '') ?>" />
-      </div>
-      <div class="form-group">
-        <label for="frm-unit">Unité</label>
-        <input <?=$roIfView?> type="text" class="form-control" id="frm-unit" name="unit" value="<?= htmlentities($show['content.unit'] ?? '') ?>" />
+      <div class="form-row">
+        <div class="form-group col-2">
+          <label for="frm-quantity">Quantité</label>
+          <input <?=$roIfView?> type="number" min="0" class="form-control" id="frm-quantity" name="quantity" value="<?= htmlentities($show['content.quantity'] ?? '1') ?>" />
+        </div>
+        <div class="form-group col">
+          <label for="frm-unit">Unité</label>
+          <input <?=$roIfView?> type="text" class="form-control" id="frm-unit" name="unit" value="<?= htmlentities($show['content.unit'] ?? 'pce') ?>" />
+        </div>
       </div>
       <div class="btn-group" role="group" aria-label="Basic example">
         <?php if($action == 'edit' || $action == 'new'): ?>
