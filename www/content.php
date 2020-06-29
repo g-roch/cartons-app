@@ -59,6 +59,9 @@ sql;
   }
   $statement = $PDO->prepare($sql);
   $statement->execute($values);
+  if($data['content.id'] == 'new') {
+    header('Location: carton.php?id='.((int) $data['content.carton']));
+  }
 }
 
 if($action != 'none') {
